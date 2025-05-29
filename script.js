@@ -1,52 +1,46 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f0f0f0;
-  margin: 0;
-  padding: 0;
-  color: #333;
+const blogPosts = [
+  {
+    title: "Getting Started with JavaScript",
+    content: "JavaScript is a powerful scripting language used to create dynamic web content. This guide walks you through the basics."
+  },
+  {
+    title: "10 CSS Tricks You Should Know",
+    content: "Learn about 10 useful CSS tricks that will make your websites more responsive and stylish."
+  },
+  {
+    title: "Building Responsive Layouts",
+    content: "Responsive design ensures your site works on all devices. Let’s explore how to use flexbox and media queries effectively."
+  }
+];
+
+const blogContainer = document.getElementById('blogContainer');
+const searchInput = document.getElementById('searchInput');
+
+// Function to display blog posts
+function displayPosts(posts) {
+  blogContainer.innerHTML = '';
+  posts.forEach(post => {
+    const postDiv = document.createElement('div');
+    postDiv.classList.add('blog-post');
+
+    postDiv.innerHTML = `
+      <h2>${post.title}</h2>
+      <p>${post.content}</p>
+    `;
+
+    blogContainer.appendChild(postDiv);
+  });
 }
 
-header {
-  background-color: #6200ea;
-  color: white;
-  padding: 2rem;
-  text-align: center;
-}
+// Initial load
+displayPosts(blogPosts);
 
-#searchInput {
-  margin-top: 1rem;
-  padding: 0.5rem;
-  width: 60%;
-  max-width: 400px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 4px;
-}
-
-#blogContainer {
-  padding: 2rem;
-  display: grid;
-  gap: 1.5rem;
-  max-width: 800px;
-  margin: auto;
-}
-
-.blog-post {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.blog-post h2 {
-  margin-top: 0;
-  color: #6200ea;
-}
-
-footer {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-}
+// Filter blog posts based on search input
+searchInput.addEventListener('input', () => {
+  const searchText = searchInput.value.toLowerCase();
+  const filteredPosts = blogPosts.filter(post =>
+    post.title.toLowerCase().includes(searchText) ||
+    post.content.toLowerCase().includes(searchText)
+  );
+  displayPosts(filteredPosts);
+});
